@@ -22,7 +22,10 @@ RUN git clone --depth 1 --branch "${CLAUDE_MEM_VERSION}" https://github.com/thed
 
 USER node
 # Same as upstream: skip onnxruntime's CUDA provider, bake the default embedding model.
+# The SQL grammar is held at the version in upstream's bun.lock: npm ignores that lockfile, and
+# 0.3.12+ builds itself with a tree-sitter CLI that needs glibc 2.39 (bookworm has 2.36).
 RUN cd /opt/claude-mem \
+ && npm pkg set 'dependencies.@derekstride/tree-sitter-sql=0.3.11' \
  && ONNXRUNTIME_NODE_INSTALL_CUDA=skip npm install --omit=dev --legacy-peer-deps \
  && npm cache clean --force \
  && node -e "import('@huggingface/transformers').then(t => t.pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', { dtype: 'fp32' }))"
