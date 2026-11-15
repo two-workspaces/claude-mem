@@ -2,7 +2,7 @@
 # from a pinned release tag, minus the Claude Code CLI (the server's claude
 # provider calls the Messages API directly) and with a first-boot key setup.
 # upgrade: github thedotmack/claude-mem
-ARG CLAUDE_MEM_VERSION=v15.7.0
+ARG CLAUDE_MEM_VERSION=v15.18.3
 
 # upgrade: skip
 FROM node:20-bookworm
@@ -43,6 +43,7 @@ ENV CLAUDE_MEM_DOCKER=1 \
     CLAUDE_MEM_REDIS_MODE=docker \
     CLAUDE_MEM_AUTH_MODE=api-key \
     CLAUDE_MEM_CHROMA_ENABLED=false \
+    CLAUDE_MEM_AUTO_UPDATE=false \
     CLAUDE_MEM_HOST=0.0.0.0 \
     CLAUDE_MEM_SERVER_HOST=0.0.0.0 \
     CLAUDE_MEM_WORKER_HOST=0.0.0.0 \
